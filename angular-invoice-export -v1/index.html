@@ -1,0 +1,199 @@
+	<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Invoicing - Built with AngularJS</title>
+  <meta charset='utf-8'>
+  <meta name="description" content="AngularJS and Angular Code Example for creating Invoices and Invoicing Application">
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body ng-app="invoicing" ng-controller="InvoiceCtrl" >
+  <div class="container" width="800px" id="invoice" >
+    <div class="row">
+      <div class="col-xs-12 heading">
+        PROFROMA INVOICE
+      </div>
+    </div>
+	<div class="row infos" style="border:solid thin">
+		<div class="col-xs-5 left"> <!--   style="border:solid thin"-->
+			<label for="company-info">Exporter's Details</label></br></br>
+			<b>M/S. PHOENIX EXPORTS</b><br/>
+			<text>318, Shiv Shakti Paradise,</text><br/>
+			<text>Central Spine, VidhyaNagar,</text><br/>
+			<text>Jipur (India) - 302023 </text><br/>
+			<text>TELEFAX : +91-141-2232036</text></p>
+		</div>
+      <div class="col-xs-3" style="border-right:solid thin; border-left:solid thin">
+        <div class="invoice-number-container">
+          <label for="invoice-number">Pro Invoice No And Date </label><br>
+		  <input type="text" id="invoice-number" ng-model="invoice.invoice_number" style="height:20px; width:150px; float:center"/><br>
+        </div>
+		<div class="date-container">
+          <input type="date" id="date" style="height:20px; width:150px; float:center"/><p>
+        </div>
+      </div>
+	  <div class="col-xs-4">
+        <div class="Exporter-container">
+          <label for="exported-ref">Exporter's Ref No </label><input type="text" id="Ref" style="height:20px; width:100px"/>
+        </div>
+		<div class="exporter-ref-container" style="float:left">
+          <!--label for="exported-ref">Exporter's Ref No</label></br-->
+		  <label for="exported-ref">Import / Export Code No.</label><br>
+		  <text for="exported-ref">1309002746</text>
+        </div>
+      </div>
+	  <hr>
+
+      <div class="col-xs-7" style="border-top:solid thin; border-left:solid thin">
+        <div class="exporter-ref-container" style="float:left">
+		  <label for="Country-of-origin">Bank Details : </label>
+          <select ng-model='data.selectedOption' ng-options='Bank.name for Bank in bankDetails'></select></br>
+		  <!-- <label>{{data.selectedOption}}</label><br> -->
+		  <label>Account Name: {{data.selectedOption.accountName}}</label><br>
+		  <label>Account No -: {{data.selectedOption.accountNum}}</label><br>
+		  <label>SWIFT Code -: {{data.selectedOption.swiftCode}}</label>
+        </div>
+      </div>	  
+	</div>
+    <div class="row infos" style="border:solid thin">
+      <div class="col-xs-5" style="border-right:solid thin">
+	    <label for="company-info">Consignee </label></br></br>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.name" style="height:20px; width:300px"/></div>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.address1" style="height:20px; width:300px"/></div>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.address2" style="height:20px; width:300px"/></div>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.postal" style="height:20px; width:300px"/></div>
+		<div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.phone" style="height:20px; width:300px"/></div>
+      </div>
+	  <div class="col-xs-7 center" style="border-bottom:solid thin">
+	    <label for="company-info">Buyer (Other than Consignee)</label>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.name" style="height:20px; width:300px"/></div>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.address1" style="height:20px; width:300px"/></div>
+        <div class="input-container" style="padding:0px"><input type="text" ng-model="invoice.customer_info.address2"style="height:20px; width:300px"/></div>
+      </div>
+	  <div class="col-xs-3" style="border-right:solid thin">
+		<label for="Country-of-origin">Country of Origin</label><br>
+        <select ng-model='CountryOrigin' ng-options='origin.name for origin in availableOrigins'style="float:left"></select></br><br>
+	  </div>
+	  <div class="col-xs-4">
+		<label for="Country-of-origin">Country Of Destination</label><br>
+        <select ng-model='CountryDestination' ng-options='destination.name for destination in availableDestinations'style="float:left"></select></br><br>
+	  </div>
+	</div>
+	<div class="row infos" style="border:solid thin">
+		<div class="col-xs-4" style="border-right:solid thin">
+		 	<br/><label for="Vessel-number">Vessel No &nbsp;</label><input type="text" id="vessel" name="vessel" style="height:20px; width:100px; float:right" />
+			<label for="Pre-carriage">Pre Carriage By&nbsp;</label><input type="text" id="Carriage by " style="height:20px; width:100px; float:right"/>
+			<label for="Port-of-Discharge">Discharge Port</label>
+			<select ng-model='DischargePort' ng-options='DischargePort.name for DischargePort in DischargePorts' style="height:20px; width:100px; float:right"></select></br>
+		</div>
+		<div class="col-xs-4" style="border-right:solid thin">
+			<br/>
+			<label for="Place-of-Receipt">Place of Receipt</label>
+			<select ng-model='ReceiptPlace' ng-options='ReceiptPlace.name for Receipt in ReceiptPlaces'style="height:20px; width:100px; float:right"></select>
+			<br/><label for="Final Destination">Final Destination</label>
+			<select ng-model='CountryDestination' ng-options='Destination.name for Destination in availableDestinations'style="height:20px; width:100px; float:right"></select></br>
+			<label for="Port-of-Loading">Loading Port</label>
+			<select ng-model='LoadingPort' ng-options='LoadingPort.name for LoadingPort in LoadingPorts' style="height:20px; width:100px; float:right"></select></br>
+		</div>
+		<div class="col-xs-4">
+			<br/>
+			<label for="terms-of-delivery">Terms of Delivery</label>
+			<select ng-model='DeliveryT' ng-options='DeliveryTerm.name for DeliveryTerm in DeliveryTerms' style="height:20px; width:100px; float:right"></select><br/>
+			<label for="Payment-Term">Payment Terms </label>
+			<select ng-model='PaymentTerm' ng-options='PaymentTerm.name for PaymentTerm in PaymentTerms' style="height:20px; width:100px; float:right"></select></br>
+			<label for="Port-of-Discharge">Shipment Period</label>
+			<input type="text" id="shipment-period" style="height:20px; width:100px; float:right"/>
+		</div>
+	</div>
+	<div class="Mitishaoverview">
+		<div class="items-table" >
+		  <div class="row header" style="border:solid thin">
+			<div class="col-xs-1">&nbsp;</div>
+			<div class="col-xs-3" style="border-right:solid thin">Description of Goods</div>
+			<div class="col-xs-3" style="border-right:solid thin">Kind of Packages</div>
+			<div class="col-xs-2" style="border-right:solid thin">Number</div>
+			<div class="col-xs-1" style="border-right:solid thin">Qty</div>
+			<div class="col-xs-1" style="border-right:solid thin">Rate</div>
+			<div class="col-xs-1">Total</div>
+		  </div>
+		  <div class="row invoice-item" ng-repeat="item in invoice.items" ng-animate="'slide-down'" style="border:solid thin">
+			<div class="col-xs-1 remove-item-container" style="border-right:solid thin">
+			  <a href ng-hide="printMode" ng-click="removeItem(item)" class="btn btn-danger">[X]</a>
+			</div>
+			<div class="col-xs-3 input-container" style="border-right:solid thin">
+			<!--div class="col-xs-3"-->
+			  <select ng-model='itemDescription' ng-options='ProductList.Desciption for ProductList in availableProducts' size="1" ></select>
+			  <!--input ng-model="item.Description" placeholder="" size="15"/-->
+			</div>
+			<div class="col-xs-3 input-container" style="border-right:solid thin">
+			  <input ng-model="item.kind" placeholder="" size="1"/>
+			</div>
+			<div class="col-xs-2 input-container"style="border-right:solid thin">
+			  <input ng-model="item.Number" value="1" placeholder="" size="5"/>
+			</div>
+			<div class="col-xs-1 input-container"style="border-right:solid thin">
+			  <input ng-model="item.qty" value="1" size="1" ng-required ng-validate="integer" placeholder="" />
+			</div>
+			<div class="col-xs-1 input-container"style="border-right:solid thin">
+			  <input ng-model="item.rate" value="0.00" ng-required ng-validate="number" size="1" placeholder="" />
+			</div>
+			<div class="col-xs-1 text-right input-container">
+			  {{item.cost * item.qty | currency: currencySymbol}}
+			</div>
+		  </div>
+		  <div class="row invoice-item">
+			<div class="col-xs-12 add-item-container" ng-hide="printMode" style="border:solid thin; border-right:solid thin; border-bottom:solid thin">
+			  <a class="btn btn-primary" href ng-click="addItem()" >[+]</a>
+			</div>
+		  </div>
+			<div class="row infos" style="border-right:solid thin; border-left:solid thin">
+				<div class="col-xs-11 text-right">Total:</div>
+				<div class="col-xs-1 text-right">{{calculateGrandTotal() | currency: currencySymbol}}</div>
+			</div>
+		</div>
+	</div>
+	<div class="row infos" style="border:solid thin">
+      <div class="col-xs-12">
+	    <label for="company-info">&nbsp;Documents Required </label><input type="text" id="documents"/>
+	  </div>
+	</div>
+	<div class="row infos" style="border-bottom:solid thin">
+      <div class="col-xs-12" style="border-right:solid thin; border-left:solid thin">
+	    <label for="company-info">&nbsp;Amount Chargeable in words </label><input type="text" id="words"/>
+	  </div>
+	</div>
+	<div class="row infos" style="border-bottom:solid thin; border-right:solid thin; border-left:solid thin">
+      <div class="col-xs-12">
+	    <text>** All Bank charger must be paid by Buyer outside India **</text>
+	  </div>
+	</div>
+	<div class="row infos" >
+      <div class="col-xs-12" style="border-right:solid thin; border-left:solid thin">
+	    <label for="company-info">&nbsp;Notes </label><input type="text" id="notes"/>
+	  </div>
+	</div>
+	<div class="row infos" style="border:solid thin">
+      <div class="col-xs-9" style="border-right:solid thin">
+	    <label for="company-info">Declaration </label><br/>
+		<text>We declare that this Proforma Invoice shows the actual price of the goods described 
+		and that all particulars are true and correct.</text>
+		<text>Once advance received will not be refunded in any circumstances</text>
+      </div>
+	  <div class="col-xs-3">
+	    <!--label for="company-info">Signature and Date</label-->
+		<text>For PHOENIX EXPORTS</text><br/><br/>
+		<text>Authorised Signatory</text>
+      </div>
+	</div>
+    <div class="row noPrint actions">
+      <a href="#" class="btn btn-primary" ng-show="printMode" ng-click="printInfo()">Print</a>
+      <a href="#" class="btn btn-primary" ng-click="clearLocalStorage()">Reset</a>
+      <a href="#" class="btn btn-primary" ng-hide="printMode" ng-click="printMode = true;">Turn On Print Mode</a>
+      <a href="#" class="btn btn-primary" ng-show="printMode" ng-click="printMode = false;">Turn Off Print Mode</a>
+    </div>
+	</div>
+
+</body>
+</html>
